@@ -3,7 +3,7 @@
 HOME_PATH=$HOME
 GHOST_PATH="./current"
 GHOST_SERVER_URL="https://testergadungan.github.io"
-EXPORT_DIR="static"
+EXPORT_DIR="gh-pages"
 
 function color_echo {
   echo -e "========== \033[33m$1\033[0m =========="
@@ -12,11 +12,20 @@ function color_echo {
 deploy() {
 	if [ -d "$GHOST_PATH" ]; then
 		# cd "$GHOST_PATH"
-    color_echo "remove old build"
-    rm -rf $EXPORT_DIR
-		# Generating static files
+    # color_echo "remove old build"
+    # rm -rf $EXPORT_DIR
+		
+    color_echo "[INFO] Generating static files"
 		# buster generate --domain="$GHOST_SERVER_URL"
     $(npm bin)/gssg --url "$GHOST_SERVER_URL" --dest $EXPORT_DIR
+    
+    color_echo "[INFO] Commit files"
+    cd $EXPORT_DIR
+    git add -A
+		git commit -m "Update on the website at $(date)"
+
+    color_echo "[INFO] Push to server"
+    git push -u origin gh-pages -f
   fi
 }
 
