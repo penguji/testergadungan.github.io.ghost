@@ -17,7 +17,7 @@ deploy() {
 		# Generating static files
 		# buster generate --domain="$GHOST_SERVER_URL"
     $(npm bin)/gssg --url "$GHOST_SERVER_URL" --dest $EXPORT_DIR
-
+  fi
 }
 
 if [ ! -d "./node_modules" ]; then
